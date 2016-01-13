@@ -12,7 +12,7 @@ TEST_CASE( "TEST 1" ) {
 }
 
 TEST_CASE("TEST 2") {
-    char B[] = "Test2";
+    char * B = "Test2";
     String A(B);
     const char *pt = A.data();
     REQUIRE(A.size() == 5);
@@ -22,7 +22,7 @@ TEST_CASE("TEST 2") {
 }
 
 TEST_CASE("TEST 3") {
-    char B[] = "Test3";
+    char * B = "Test3";
     String A(B, 5);
     const char *pt = A.data();
     REQUIRE(A.size() == 5);
@@ -86,7 +86,7 @@ TEST_CASE ("Test_assigment2") {
 }
 
 TEST_CASE ("Test_plus_assigment_1") {
-    char *res = "plus_assigment";
+    char * res = "plus_assigment";
     String A("plus_");
     unsigned Asize = A.size();
     String B("assigment");
