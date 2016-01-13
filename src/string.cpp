@@ -4,11 +4,6 @@
 #include "String.h"
 
 
-void copyString(const char *str);
-
-void clean();
-
-
 String::String() {
     length = 1; ///???? should be 0?
     string = (char) 0;
@@ -176,6 +171,7 @@ size_t String::size() const {
     size_t currLength = 0;
     while (string[currLength++] != '\0') {
     }
+
     return currLength;
 }
 
