@@ -66,6 +66,7 @@ String::~String() {
     }
 }
 
+//optize
 String &String::operator=(const String &other) {
     delete[] string;
     string = new char[other.length + 1];
@@ -73,6 +74,7 @@ String &String::operator=(const String &other) {
     for (size_t i = 0; i < length; i++) {
         string[i] = other.string[i];
     }
+    string[length] = '\0';
     return *this;
 }
 
@@ -80,7 +82,7 @@ String &String::operator=(String &&other) {
     delete[] string;
     string = other.string;
     length = other.length;
-    other.string = nullptr;
+    other.string[0] = '\0';
     other.length = 0;
     return *this;
 
@@ -94,6 +96,7 @@ String &String::operator+=(const String &suffix) {
     for (size_t j = length; j < length + suffix.length; ++j) {
         concat[j] = suffix.string[j];
     }
+    concat[length + suffix.length] = '\0';
     delete[] string;
     string = concat;
     length += suffix.length;
@@ -103,9 +106,11 @@ String &String::operator+=(const String &suffix) {
 
 String &String::operator+=(const char *suffix) {
     size_t suffixLength = 0;
-    while (*(suffix++) != '\0') {
+    const char * temp = suffix;
+    while (*(temp++) != '\0') {
         suffixLength++;
     }
+
     char *concat = new char[length + suffixLength + 1];
     for (size_t i = 0; i < length; ++i) {
         concat[i] = string[i];
@@ -113,7 +118,7 @@ String &String::operator+=(const char *suffix) {
     for (size_t j = length; j < length + suffixLength; ++j) {
         concat[j] = suffix[j];
     }
-    //set last symvot to char(0)??
+    concat[length+suffixLength]='\0';
     delete[] string;
     string = concat;
     length += suffixLength;
@@ -127,7 +132,7 @@ String &String::operator+=(char suffix) {
     }
     concat[length] = suffix;
     concat[length + 1] = '\0';
-    delete string;
+    delete [] string;
     string = concat;
     length++;
     return *this;
@@ -153,7 +158,7 @@ const char String::operator[](size_t pos) const {
 }
 
 char &String::at(size_t pos) {
-    if (pos >= length || pos < 0) {
+    if (pos >= length) {
         throw std::out_of_range("");
     }
     return string[pos];
@@ -161,7 +166,7 @@ char &String::at(size_t pos) {
 
 //this is the same
 const char String::at(size_t pos) const {
-    if (pos >= length || pos < 0) {
+    if (pos >= length ) {
         throw std::out_of_range("");
     }
     return string[pos];
@@ -228,6 +233,7 @@ bool operator>(const String &lhs, const String &rhs) {
 bool operator>=(const String &lhs, const String &rhs) {
     return !(lhs < rhs);
 }
+
 
 std::ostream &operator<<(std::ostream &stream, const String &A) {
     return stream << A.data();
