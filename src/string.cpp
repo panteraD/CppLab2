@@ -55,13 +55,13 @@ String::String(const String &other) {
 String::String(String &&other) {
     string = other.string;
     length = other.length;
-    other.string = '\0';
+    other.string[0] = '\0';
     other.length = 0;
 }
 
 
 String::~String() {
-    if (string != '\0') {
+    if (string[0] != '\0') {
         delete[] string;
     }
 }
