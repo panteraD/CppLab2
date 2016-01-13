@@ -7,7 +7,7 @@
 //    return number <= 1 ? number : Factorial(number-1)*number;
 //}
 
-
+//
 //lets start test
 void cmp_string(const String &lhs, const String &rhs) {
     assert(lhs.size()==rhs.size());
