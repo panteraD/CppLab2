@@ -60,7 +60,7 @@ TEST_CASE("Test6") {
         REQUIRE(C[i] == A[i]);
     }
     REQUIRE(B.size() == 0);
-    REQUIRE(B.data() == '\0');
+    REQUIRE(*(B.data()) == '\0');
 }
 
 TEST_CASE ("Test_assigment1") {
@@ -82,7 +82,7 @@ TEST_CASE ("Test_assigment2") {
         REQUIRE(C[i] == A[i]);
     }
     REQUIRE(B.size() == 0);
-    REQUIRE(B.data() == '\0');
+    REQUIRE(*(B.data()) == '\0');
 }
 
 TEST_CASE ("Test_plus_assigment_1") {
@@ -244,5 +244,5 @@ TEST_CASE ("Test_more_equality") {
     String B("more");
     String C("equality");
     REQUIRE(((B >= A) && (A >= C)));
-    
+
 }
