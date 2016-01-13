@@ -5,7 +5,7 @@
 
 String::String() {
     length = 1; ///???? should be 0?
-    string = (char) 0;
+    string = '\0';
 }
 
 String::String(const char *str) {
