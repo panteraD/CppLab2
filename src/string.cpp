@@ -4,8 +4,9 @@
 
 
 String::String() {
-    length = 1;
-    *string = '\0';
+    length = 0;
+    string = new char[1];
+    string[0] = '\0';
 }
 
 String::String(const char *str) {
@@ -32,33 +33,37 @@ String::String(const char *str, unsigned count) {
 String::String(char ch, unsigned count) {
     length = count + 1;
     string = new char[length];
+    char *temp = string;
 
-    for (std::size_t i; i < length - 1; i++) {
-        string[i] = ch;
+    for (std::size_t i = 0; i < length; ++i) {
+        *(temp++) = ch;
     }
-    string[length - 1] = (char) 0;
+    *(temp) = '\0';
+
 }
 
+//copy constructor
 String::String(const String &other) {
-    string = new char[other.length];
+    string = new char[other.length + 1];
     length = other.length;
-    for (size_t i = 0; i < length; i++) {
+    for (size_t i = 0; i < length; ++i) {
         string[i] = other.string[i];
     }
 }
 
 
-//nice example: http://stackoverflow.com/questions/3106110/what-are-move-semantics/3109981#3109981
 String::String(String &&other) {
     string = other.string;
     length = other.length;
-    other.string = nullptr;
+    other.string = '\0';
     other.length = 0;
 }
 
 
 String::~String() {
-    delete[] string;
+    if (string != '\0') {
+        delete[] string;
+    }
 }
 
 String &String::operator=(const String &other) {
@@ -167,11 +172,7 @@ const char *String::data() const {
 }
 
 size_t String::size() const {
-    size_t currLength = 0;
-    while (string[currLength++] != '\0') {
-    }
-
-    return currLength;
+    return length;
 }
 
 bool operator==(const String &lhs, const String &rhs) {
@@ -190,7 +191,7 @@ bool operator<(const String &lhs, const String &rhs) {
     size_t size;
     size = lhs.length <= rhs.length ? lhs.length : rhs.length;
     for (size_t i = 0; i < size; ++i) {
-        if(lhs.string[i] <rhs.string[i]) {
+        if (lhs.string[i] < rhs.string[i]) {
             return true;
         } else if (lhs.string[i] > rhs.string[i]) {
             return false;
@@ -228,7 +229,7 @@ bool operator>=(const String &lhs, const String &rhs) {
     return !(lhs < rhs);
 }
 
-std::ostream & operator << (std::ostream &stream, const String & A) {
+std::ostream &operator<<(std::ostream &stream, const String &A) {
     return stream << A.data();
 }
 
