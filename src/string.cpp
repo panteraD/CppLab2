@@ -1,5 +1,4 @@
 #include <stddef.h>
-#include <mingw32/bits/c++config.h>
 #include <stdexcept>
 #include "String.h"
 
