@@ -1,0 +1,1 @@
+alias.pullall '!git pull && git submodule update --init --recursive'
