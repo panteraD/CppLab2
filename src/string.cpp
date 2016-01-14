@@ -10,6 +10,7 @@ String::String() {
 }
 
 String::String(const char *str) {
+    length = 0;
     const char *temp = str;
     while (*(temp++) != '\0') {
         length++;
@@ -19,8 +20,8 @@ String::String(const char *str) {
         strCopy[i] = str[i];
     }
 
-    string=strCopy;
-    string[length]='\0';
+    string = strCopy;
+    string[length] = '\0';
 }
 
 //cut from beginning
@@ -34,8 +35,8 @@ String::String(const char *str, unsigned count) {
 
 //repeat symbol count times
 String::String(char ch, unsigned count) {
-    length = count + 1;
-    string = new char[length];
+    length = count;
+    string = new char[length + 1];
     char *temp = string;
 
     for (std::size_t i = 0; i < length; ++i) {
@@ -49,7 +50,7 @@ String::String(char ch, unsigned count) {
 String::String(const String &other) {
     string = new char[other.length + 1];
     length = other.length;
-    for (size_t i = 0; i < length; ++i) {
+    for (size_t i = 0; i <= length; ++i) {
         string[i] = other.string[i];
     }
 }
@@ -58,7 +59,9 @@ String::String(const String &other) {
 String::String(String &&other) {
     string = other.string;
     length = other.length;
-    other.string[0] = '\0';
+    //other.string[0] = '\0'; //no magic
+    char nully = '\0';
+    other.string = &(nully); //magic
     other.length = 0;
 }
 
@@ -85,7 +88,9 @@ String &String::operator=(String &&other) {
     delete[] string;
     string = other.string;
     length = other.length;
-    other.string[0] = '\0';
+    
+    char nully = '\0';
+    other.string = &(nully); //magic #2
     other.length = 0;
     return *this;
 
@@ -97,7 +102,7 @@ String &String::operator+=(const String &suffix) {
         concat[i] = string[i];
     }
     for (size_t j = length; j < length + suffix.length; ++j) {
-        concat[j] = suffix.string[j];
+        concat[j] = suffix.string[j - length];
     }
     concat[length + suffix.length] = '\0';
     delete[] string;
@@ -109,7 +114,7 @@ String &String::operator+=(const String &suffix) {
 
 String &String::operator+=(const char *suffix) {
     size_t suffixLength = 0;
-    const char * temp = suffix;
+    const char *temp = suffix;
     while (*(temp++) != '\0') {
         suffixLength++;
     }
@@ -119,9 +124,9 @@ String &String::operator+=(const char *suffix) {
         concat[i] = string[i];
     }
     for (size_t j = length; j < length + suffixLength; ++j) {
-        concat[j] = suffix[j];
+        concat[j] = suffix[j - length];
     }
-    concat[length+suffixLength]='\0';
+    concat[length + suffixLength] = '\0';
     delete[] string;
     string = concat;
     length += suffixLength;
@@ -135,7 +140,7 @@ String &String::operator+=(char suffix) {
     }
     concat[length] = suffix;
     concat[length + 1] = '\0';
-    delete [] string;
+    delete[] string;
     string = concat;
     length++;
     return *this;
@@ -169,7 +174,7 @@ char &String::at(size_t pos) {
 
 //this is the same
 const char String::at(size_t pos) const {
-    if (pos >= length ) {
+    if (pos >= length) {
         throw std::out_of_range("");
     }
     return string[pos];
@@ -205,12 +210,18 @@ bool operator<(const String &lhs, const String &rhs) {
             return false;
         }
     }
+    if (rhs.length > lhs.length) {
+        return true;
+    }
     return false;
 }
 
 
 String operator+(const String &lhs, const String &rhs) {
-    return String(lhs) += rhs;
+    String tmp(lhs);
+    tmp += rhs;
+    return tmp;
+//    return (String(lhs) += rhs);
 }
 
 String operator+(const String &lhs, const char *rhs) {

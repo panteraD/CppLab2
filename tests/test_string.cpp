@@ -181,9 +181,11 @@ TEST_CASE ("Test_equality") {
 TEST_CASE ("Test_less") {
     String A("Test");
     String B(A);
-    REQUIRE(A < B);
-    B += "er";
     REQUIRE_FALSE(A < B);
+    B += "er";
+    REQUIRE(A < B);
+    A+="aa";
+    REQUIRE(A < B);
 }
 
 TEST_CASE ("Test_plus_1") {
@@ -191,6 +193,7 @@ TEST_CASE ("Test_plus_1") {
     String B("plus_1");
     String C;
     String res("Test_plus_1");
+
     C = A + B;
     A = A + B;
     REQUIRE(C == res);

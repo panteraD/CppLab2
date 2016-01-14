@@ -4,7 +4,7 @@
 
 class String {
 private:
-    std::size_t length; //length of actual string, w/o EOL symvol
+    size_t length; //length of actual string, w/o EOL symvol
     char * string;
 public:
     static char position;
