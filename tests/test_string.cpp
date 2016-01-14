@@ -12,8 +12,7 @@ TEST_CASE("TEST 1") {
 }
 
 TEST_CASE("TEST 2") {
-    //char * B = "Test2";
-    char *B;
+    char  B[] = "Test2";
     String A(B);
     const char *pt = A.data();
     REQUIRE(A.size() == 5);

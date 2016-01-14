@@ -10,7 +10,8 @@ String::String() {
 }
 
 String::String(const char *str) {
-    while (*(str++) != '\0') {
+    const char *temp = str;
+    while (*(temp++) != '\0') {
         length++;
     }
     char *strCopy = new char[length + 1];
@@ -18,6 +19,8 @@ String::String(const char *str) {
         strCopy[i] = str[i];
     }
 
+    string=strCopy;
+    string[length]='\0';
 }
 
 //cut from beginning
