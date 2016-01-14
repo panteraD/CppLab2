@@ -88,7 +88,7 @@ String &String::operator=(String &&other) {
     delete[] string;
     string = other.string;
     length = other.length;
-    
+
     char nully = '\0';
     other.string = &(nully); //magic #2
     other.length = 0;
