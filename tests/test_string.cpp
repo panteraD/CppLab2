@@ -3,30 +3,31 @@
 #include "catch.hpp"
 #include "String.h"
 
+using namespace std;
 
 
-TEST_CASE( "TEST 1" ) {
+TEST_CASE("TEST 1") {
     String s;
     REQUIRE(*(s.data()) == '\0');
-    REQUIRE(s.size()==0);
+    REQUIRE(s.size() == 0);
 }
 
 TEST_CASE("TEST 2") {
-    char  B  []=  "Test2";
+    char  B[] = "Test2";
     String A(B);
     const char *pt = A.data();
     REQUIRE(A.size() == 5);
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(B[i] == *(pt++));
     }
 }
 
 TEST_CASE("TEST 3") {
-    char  B []= "Test3";
+    char * B = "Test3";
     String A(B, 5);
     const char *pt = A.data();
     REQUIRE(A.size() == 5);
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(B[i] == *(pt++));
     }
 }
@@ -36,7 +37,7 @@ TEST_CASE("Test 4") {
     String A(B, 10);
     const char *pt = A.data();
     REQUIRE(A.size() == 10);
-    for(unsigned i = 0; i < A.size(); ++i) {
+    for (unsigned i = 0; i < A.size(); ++i) {
         REQUIRE(B == *(pt++));
     }
     REQUIRE('\0' == *pt);
@@ -46,7 +47,7 @@ TEST_CASE("Test5") {
     String B("Test5");
     String A(B);
     REQUIRE(A.size() == B.size());
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(B[i] == A[i]);
     }
 }
@@ -56,7 +57,7 @@ TEST_CASE("Test6") {
     String C(B);
     String A(std::move(B));
     REQUIRE(A.size() == C.size());
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(C[i] == A[i]);
     }
     REQUIRE(B.size() == 0);
@@ -68,7 +69,7 @@ TEST_CASE ("Test_assigment1") {
     String B, C;
     C = B = A;
     REQUIRE(A.size() == C.size());
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(C[i] == A[i]);
     }
 }
@@ -78,7 +79,7 @@ TEST_CASE ("Test_assigment2") {
     String C = B;
     String A = std::move(B);
     REQUIRE(A.size() == C.size());
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(C[i] == A[i]);
     }
     REQUIRE(B.size() == 0);
@@ -86,14 +87,14 @@ TEST_CASE ("Test_assigment2") {
 }
 
 TEST_CASE ("Test_plus_assigment_1") {
-    char  res [] = "plus_assigment";
+    char *res = "plus_assigment";
     String A("plus_");
     unsigned Asize = A.size();
     String B("assigment");
     unsigned Bsize = B.size();
     A += B;
     REQUIRE(A.size() == (Asize + Bsize));
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(res[i] == A[i]);
     }
 }
@@ -111,14 +112,14 @@ TEST_CASE ("Test_plus_assigment_2") {
     REQUIRE((Asize + Csize) == C.size());
     REQUIRE(B.size() == (Asize + Bsize));
     REQUIRE(B.size() == C.size());
-    for(unsigned i = 0; i <= C.size(); ++i) {
+    for (unsigned i = 0; i <= C.size(); ++i) {
         REQUIRE(res[i] == C[i]);
         REQUIRE(res[i] == B[i]);
     }
 }
 
 TEST_CASE ("Test_plus_assigment_3") {
-    char res[] = "plus_";
+    char *res = "plus_";
     String C("plus");
     unsigned Csize = C.size();
     char A = '_';
@@ -130,7 +131,7 @@ TEST_CASE ("Test_plus_assigment_3") {
     REQUIRE((Asize + Csize) == C.size());
     REQUIRE(B.size() == (Asize + Bsize));
     REQUIRE(B.size() == C.size());
-    for(unsigned i = 0; i <= B.size(); ++i) {
+    for (unsigned i = 0; i <= B.size(); ++i) {
         REQUIRE(res[i] == C[i]);
         REQUIRE(res[i] == B[i]);
     }
@@ -139,14 +140,15 @@ TEST_CASE ("Test_plus_assigment_3") {
 TEST_CASE ("Test_index") {
     String A("Test");
     A[1] = 'a';
-    char res[] = "Tast";
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    char *res = "Tast";
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(res[i] == A[i]);
     }
 }
+
 TEST_CASE ("Test_swap") {
-    char res1 [] = "hgf";
-    char res2 []= "lkjhgf";
+    char *res1 = "hgf";
+    char *res2 = "lkjhgf";
     String A(res1);
     String B(res2);
     unsigned Asize = A.size();
@@ -154,10 +156,10 @@ TEST_CASE ("Test_swap") {
     A.swap(B);
     REQUIRE(Bsize == A.size());
     REQUIRE(Asize == B.size());
-    for(unsigned i = 0; i <= A.size(); ++i) {
+    for (unsigned i = 0; i <= A.size(); ++i) {
         REQUIRE(res2[i] == A[i]);
     }
-    for(unsigned i = 0; i <= B.size(); ++i) {
+    for (unsigned i = 0; i <= B.size(); ++i) {
         REQUIRE(res1[i] == B[i]);
     }
 }
@@ -172,7 +174,7 @@ TEST_CASE ("Test_equality") {
     String A("Test");
     String B(A);
     REQUIRE(A.size() == B.size());
-    for(unsigned i = 0; i < A.size(); ++i) {
+    for (unsigned i = 0; i < A.size(); ++i) {
         REQUIRE(A[i] == B[i]);
     }
 }
@@ -198,7 +200,7 @@ TEST_CASE ("Test_plus_1") {
 
 TEST_CASE ("Test_plus_2") {
     String A("Test_");
-    char *B = "plus_1";
+    char * B = "plus_1";
     String C;
     String res("Test_plus_1");
     C = A + B;
@@ -209,7 +211,7 @@ TEST_CASE ("Test_plus_2") {
 
 TEST_CASE ("Test_plus_3") {
     String A("Test_");
-    char *B = "plus_1";
+    char * B = "plus_1";
     String C;
     String res("Test_plus_1");
     C = B + A;
@@ -234,7 +236,7 @@ TEST_CASE ("Test_less_equality") {
 
 TEST_CASE ("Test_more") {
     String A("more");
-    String B ("aaaaa");
+    String B("aaaaa");
     REQUIRE(A > B);
 
 }
